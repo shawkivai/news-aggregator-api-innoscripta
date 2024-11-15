@@ -1,0 +1,21 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+        - database
+        - routes
+
+    # Set the analysis level (0 = least strict, max = most strict)
+    level: 5
+
+    # Exclude specific files or directories if needed
+    excludePaths:
+        - storage/*
+        - bootstrap/*
+
+    # Treat unknown types as errors (strict mode)
+    # checkMissingIterableValueType: true
+    checkUnusedViews: true
+    noEnvCallsOutsideOfConfig: true
