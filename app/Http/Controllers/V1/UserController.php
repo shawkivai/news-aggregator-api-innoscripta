@@ -19,6 +19,12 @@ class UserController extends Controller
      *     version="1.0.0",
      *     description="API for user registration and login"
      * )
+     * @OA\SecurityScheme(
+     *     securityScheme="BearerAuth",
+     *     type="http",
+     *     scheme="bearer",
+     *     bearerFormat="JWT"
+     * )
      */
     use ResponseTrait;
 
@@ -137,6 +143,31 @@ class UserController extends Controller
     {
         try {
             return $this->handleResponse($this->userLoginService->authenticate($request->validated()));
+        } catch (\Throwable $th) {
+            return $this->apiFailedResponse(HttpStatus::BAD_REQUEST, HttpStatus::FAILED_REQUEST, $th->getMessage());
+        }
+    }
+
+    /**
+     * Logs out a user.
+     *
+     * @OA\Post(
+     *     path="/api/v1/logout",
+     *     summary="Logs out a user",
+     *     description="Logs out a user",
+     *     tags={"User"},
+     *     security={{"BearerAuth": {}}},
+     * 
+     *     @OA\Response(
+     *         response=200,
+     *         description="User logged out successfully",
+     *     ),
+     * )
+     */
+    public function logout(): JsonResponse
+    {
+        try {
+            return $this->handleResponse($this->userLoginService->logout());
         } catch (\Throwable $th) {
             return $this->apiFailedResponse(HttpStatus::BAD_REQUEST, HttpStatus::FAILED_REQUEST, $th->getMessage());
         }

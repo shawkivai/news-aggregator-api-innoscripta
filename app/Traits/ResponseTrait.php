@@ -11,7 +11,7 @@ trait ResponseTrait
     /**
      * Function for Success response
      */
-    public function apiSuccessResponse(int $httpStatus, array|object $response, string $responseMessage): JsonResponse
+    public function apiSuccessResponse(int $httpStatus, array|object|null $response, string $responseMessage): JsonResponse
     {
         return response()->json([
             'status' => HttpStatus::SUCCESS_RESPONSE,

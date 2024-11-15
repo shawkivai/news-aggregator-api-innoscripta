@@ -29,6 +29,7 @@ To set up this project using Docker, follow these steps:
    docker compose down
    ```
 
+swagger : php artisan l5-swagger:generate
 ## Other Information
 
 - Additional files related to Docker can be found in the `docker` folder.

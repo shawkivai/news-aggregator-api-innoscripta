@@ -27,11 +27,15 @@ class UserLoginService
         );
     }
 
-    // private function authenticateUser(array $data): Authenticatable|null
-    // {
-    //     return Auth::getProvider()->retrieveByCredentials([
-    //         'email' => $data['email'],
-    //         'password' => $data['password'],
-    //     ]);
-    // }
+    public function logout()
+    {
+        Auth::user()->tokens()->delete();
+
+        return $this->respondSuccess(
+            null,
+            HttpStatus::SUCCESS,
+            HttpStatus::SUCCESS,
+            'User logged out successfully'
+        );
+    }
 }

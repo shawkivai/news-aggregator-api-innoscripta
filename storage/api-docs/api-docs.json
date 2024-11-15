@@ -27,18 +27,15 @@
                                 ],
                                 "properties": {
                                     "name": {
-                                        "description": "Full name of the user",
                                         "type": "string",
                                         "example": "John Doe"
                                     },
                                     "email": {
-                                        "description": "Email address of the user",
                                         "type": "string",
                                         "format": "email",
                                         "example": "john.doe@example.com"
                                     },
                                     "password": {
-                                        "description": "Password for the user",
                                         "type": "string",
                                         "format": "password",
                                         "example": "password123"
@@ -194,6 +191,35 @@
                         }
                     }
                 }
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logs out a user",
+                "description": "Logs out a user",
+                "operationId": "b762bfbb080c74435e9f0eb2dda1bec7",
+                "responses": {
+                    "200": {
+                        "description": "User logged out successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },
