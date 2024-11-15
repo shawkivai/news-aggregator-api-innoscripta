@@ -20,50 +20,48 @@ trait ResponseTrait
         ], $httpStatus);
     }
 
-    public function apiFailedResponse(
-        int $httpStatus,
-        int $failedStatus,
-        string $errorMsg,
-    ): JsonResponse {
-        $response = [];
-        $response['status'] = HttpStatus::FAILED_RESPONSE;
-        $response['error']['code'] = $failedStatus;
-        $response['error']['description'] = $errorMsg;
-
-        return response()->json($response, $httpStatus);
-
+    /**
+     * Function for Failure response with simplified parameters
+     */
+    public function apiFailedResponse(int $httpStatus, string $errorMessage): JsonResponse
+    {
+        return response()->json([
+            'status' => HttpStatus::FAILED_RESPONSE,
+            'error' => [
+                'code' => $httpStatus,
+                'description' => $errorMessage,
+            ],
+        ], $httpStatus);
     }
 
+    /**
+     * Common Failure response
+     */
     public function commonFailedResponse(
-        $response_msg = null,
-        int $httpStatus = HttpStatus::SUCCESS,
+        ?string $responseMessage = null,
+        int $httpStatus = HttpStatus::BAD_REQUEST
     ): JsonResponse {
-        if (empty($response_msg)) {
+        if (empty($responseMessage)) {
             return $this->apiFailedResponse(
                 HttpStatus::BAD_REQUEST,
-                HttpStatus::FAILED_REQUEST,
                 HttpStatus::FAILED_RESPONSE
             );
         }
-        $response = [];
-        $response['status'] = HttpStatus::FAILED_RESPONSE;
-        $response['error']['code'] = $httpStatus;
-        $response['error']['description'] = $response_msg;
 
-        return response()->json($response, $httpStatus);
+        return $this->apiFailedResponse($httpStatus, $responseMessage);
     }
 
+    /**
+     * Handle response based on ServiceResponseDTO status
+     */
     protected function handleResponse(ServiceResponseDTO $serviceResponseDTO): JsonResponse
     {
-
         if ($serviceResponseDTO->status == HttpStatus::FAILED_RESPONSE) {
             return $this->apiFailedResponse(
                 $serviceResponseDTO->httpStatusCode,
-                $serviceResponseDTO->apiHttpStatusCode,
                 $serviceResponseDTO->responseMessage
             );
         } elseif ($serviceResponseDTO->status == HttpStatus::SUCCESS_RESPONSE) {
-
             return $this->apiSuccessResponse(
                 $serviceResponseDTO->httpStatusCode,
                 $serviceResponseDTO->response,
@@ -77,6 +75,5 @@ trait ResponseTrait
         }
 
         return $this->commonFailedResponse();
-
     }
 }

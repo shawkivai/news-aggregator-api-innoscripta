@@ -25,13 +25,12 @@ trait ServiceResponseTrait
         throw new \Exception($this->errorMessage);
     }
 
-    protected function respondSuccess($response, int $apiCode, int $httpCode = HttpStatus::SUCCESS, ?string $messge = null, array $headers = [])
+    protected function respondSuccess($response, int $httpCode = HttpStatus::SUCCESS, ?string $messge = null, array $headers = [])
     {
         return new ServiceResponseDTO([
             'status' => HttpStatus::SUCCESS_RESPONSE,
             'response' => $response,
             'responseMessage' => $messge ? ucfirst(strtolower($messge)) : HttpStatus::SUCCESS_RESPONSE,
-            'apiHttpStatusCode' => $apiCode,
             'httpStatusCode' => $httpCode,
             'headers' => $headers,
         ]);
@@ -42,25 +41,23 @@ trait ServiceResponseTrait
      *
      * @deprecated Avoid this use case, instead use FAILED_RESPONSE_V2
      */
-    protected function respondInvalid($response, int $apiCode, int $httpCode, array $headers = [])
+    protected function respondInvalid($response, int $httpCode, array $headers = [])
     {
         return new ServiceResponseDTO([
             'status' => HttpStatus::INVALID_RESPONSE,
             'response' => $response,
             'responseMessage' => HttpStatus::INVALID_RESPONSE,
-            'apiHttpStatusCode' => $apiCode,
             'httpStatusCode' => $httpCode,
             'headers' => $headers,
         ]);
     }
 
-    protected function respondFailed(string $responseMessage, int $apiCode, int $httpCode, array $headers = [])
+    protected function respondFailed(string $responseMessage, int $httpCode, array $headers = [])
     {
         return new ServiceResponseDTO([
             'status' => HttpStatus::FAILED_RESPONSE,
             'response' => [],
             'responseMessage' => ucfirst(strtolower($responseMessage)),
-            'apiHttpStatusCode' => $apiCode,
             'httpStatusCode' => $httpCode,
             'headers' => $headers,
         ]);

@@ -26,9 +26,9 @@ class UserRegistrationService
             ];
             $user = $this->userRepository->create($data);
 
-            return $this->respondSuccess($user, HttpStatus::CREATED, HttpStatus::SUCCESS, 'User registered successfully');
+            return $this->respondSuccess($user, HttpStatus::CREATED, 'User registered successfully');
         } catch (\Throwable $th) {
-            return $this->respondFailed($th->getMessage(), HttpStatus::BAD_REQUEST, HttpStatus::FAILED_REQUEST);
+            return $this->respondFailed($th->getMessage(), HttpStatus::BAD_REQUEST);
         }
     }
 }

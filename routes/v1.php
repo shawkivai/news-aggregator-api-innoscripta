@@ -9,6 +9,7 @@ Route::middleware('api-log')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', [UserController::class, 'logout']);
+        Route::patch('reset-password', [UserController::class, 'resetPassword']);
     });
 
 });

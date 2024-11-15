@@ -8,12 +8,11 @@ class UserTokenService
 {
     public static function accessToken(): string
     {
-        return 'Bearer ' . Auth::user()->createToken('access_token')->plainTextToken;
+        return 'Bearer '.Auth::user()->createToken('access_token')->plainTextToken;
     }
 
     public static function refreshToken(): string
     {
-        return 'Bearer ' . Auth::user()->createToken('refresh_token')->plainTextToken;
+        return 'Bearer '.Auth::user()->createToken('refresh_token')->plainTextToken;
     }
 }
-    

@@ -19,13 +19,6 @@ class ServiceResponseDTO extends AbstractDTO
     public $httpStatusCode;
 
     /**
-     * Custom (Application) Status Code
-     *
-     * @var int
-     */
-    public $apiHttpStatusCode;
-
-    /**
      * Response Payload
      *
      * It could be Total or Partial Payload
