@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('news_source_id')->constrained('news_sources');
-            $table->foreignId('category_id')->constrained('categories');
+            // $table->foreignId('category_id')->constrained('categories');
             $table->string('author')->nullable();
             $table->string('title');
             $table->text('description');
