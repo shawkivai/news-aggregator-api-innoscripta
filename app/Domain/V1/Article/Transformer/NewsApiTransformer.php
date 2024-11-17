@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\V1\NewsSource\Transformer;
+namespace App\Domain\V1\Article\Transformer;
 
-use App\Domain\V1\NewsSource\DTO\NewsAPIDTO;
+use App\Domain\V1\Article\DTO\NewsAPIDTO;
 use Carbon\Carbon;
 
 class NewsApiTransformer

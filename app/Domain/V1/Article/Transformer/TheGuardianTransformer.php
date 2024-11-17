@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\V1\NewsSource\Transformer;
+namespace App\Domain\V1\Article\Transformer;
 
 use Carbon\Carbon;
 

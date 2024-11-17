@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Domain\V1\NewsSource\Services;
+namespace App\Domain\V1\Article\Services;
 
 use App\Contacts\V1\NewsSourceInterface;
-use App\Domain\V1\NewsSource\Transformer\NewYorkTimesTransformer;
+use App\Domain\V1\Article\Transformer\NewYorkTimesTransformer;
 use Illuminate\Support\Facades\Http;
 
 class NewYorkTimesApiService implements NewsSourceInterface

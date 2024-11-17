@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Domain\V1\NewsSource\Services;
+namespace App\Domain\V1\Article\Services;
 
-use App\Domain\V1\NewsSource\Repositories\ArticleRepository;
-use App\Domain\V1\NewsSource\Repositories\NewsSourceRepository;
+use App\Domain\V1\Article\Repositories\ArticleRepository;
+use App\Domain\V1\Article\Repositories\NewsSourceRepository;
 
 class NewsAggregatorService
 {

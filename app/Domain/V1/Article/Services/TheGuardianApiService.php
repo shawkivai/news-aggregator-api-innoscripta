@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\V1\NewsSource\Services;
+namespace App\Domain\V1\Article\Services;
 
-use App\Domain\V1\NewsSource\Transformer\TheGuardianTransformer;
+use App\Domain\V1\Article\Transformer\TheGuardianTransformer;
 use Illuminate\Support\Facades\Http;
 
 class TheGuardianApiService

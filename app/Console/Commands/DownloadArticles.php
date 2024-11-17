@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Domain\V1\NewsSource\Repositories\ArticleRepository;
-use App\Domain\V1\NewsSource\Repositories\NewsSourceRepository;
-use App\Domain\V1\NewsSource\Services\NewsAggregatorService;
+use App\Domain\V1\Article\Repositories\ArticleRepository;
+use App\Domain\V1\Article\Repositories\NewsSourceRepository;
+use App\Domain\V1\Article\Services\NewsAggregatorService;
 use Illuminate\Console\Command;
 
 class DownloadArticles extends Command

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\V1\NewsSource\Repositories;
+namespace App\Domain\V1\Article\Repositories;
 
 use App\Models\Category;
 use App\Models\NewsSource;

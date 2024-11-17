@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\V1\NewsSource\DTO;
+namespace App\Domain\V1\Article\DTO;
 
 use App\DataTransferObjects\AbstractDTO;
 
