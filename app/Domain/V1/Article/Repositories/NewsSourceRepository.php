@@ -10,11 +10,11 @@ class NewsSourceRepository
 {
     public function all(): Collection
     {
-        return NewsSource::where('status', 1)->inRandomOrder()->take(5)->get();
+        return NewsSource::where('status', 1)->take(3)->get();
     }
 
-    public function newsCategories(): array
+    public function newsCategories(): Collection
     {
-        return Category::where('status', 1)->get()->pluck('name')->toArray();
+        return Category::where('status', 1)->select('id', 'name')->get();
     }
 }

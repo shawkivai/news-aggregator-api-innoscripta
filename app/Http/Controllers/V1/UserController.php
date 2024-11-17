@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\V1;
 
-use App\Domain\V1\User\Services\UserLoginService;
+use App\Domain\V1\User\Services\UserAuthenticationService;
 use App\Domain\V1\User\Services\UserRegistrationService;
 use App\Enums\V1\HttpStatus;
 use App\Http\Controllers\Controller;
@@ -31,8 +31,8 @@ class UserController extends Controller
     use ResponseTrait;
 
     public function __construct(
-        private readonly UserRegistrationService $userRegistrationService,
-        private readonly UserLoginService $userLoginService
+        protected UserRegistrationService $userRegistrationService,
+        protected UserAuthenticationService $userAuthenticationService
     ) {}
 
     /**
@@ -144,7 +144,7 @@ class UserController extends Controller
     public function login(UserLoginRequest $request): JsonResponse
     {
         try {
-            return $this->handleResponse($this->userLoginService->authenticate($request->validated()));
+            return $this->handleResponse($this->userAuthenticationService->authenticate($request->validated()));
         } catch (\Throwable $th) {
             return $this->apiFailedResponse(HttpStatus::INTERNAL_ERROR, $th->getMessage());
         }
@@ -169,7 +169,7 @@ class UserController extends Controller
     public function logout(): JsonResponse
     {
         try {
-            return $this->handleResponse($this->userLoginService->logout());
+            return $this->handleResponse($this->userAuthenticationService->logout());
         } catch (\Throwable $th) {
             return $this->apiFailedResponse(HttpStatus::INTERNAL_ERROR, $th->getMessage());
         }
@@ -223,7 +223,7 @@ class UserController extends Controller
     public function resetPassword(PasswordResetRequest $request): JsonResponse
     {
         try {
-            return $this->handleResponse($this->userLoginService->resetPassword($request->validated()));
+            return $this->handleResponse($this->userAuthenticationService->resetPassword($request->validated()));
         } catch (\Throwable $th) {
             return $this->apiFailedResponse(HttpStatus::INTERNAL_ERROR, $th->getMessage());
         }

@@ -28,8 +28,39 @@ To set up this project using Docker, follow these steps:
    ```bash
    docker compose down
    ```
+7. **Go inside container**
 
-swagger : php artisan l5-swagger:generate
-## Other Information
+```bash
+docker exec -it <container_id> bash
+```
 
-- Additional files related to Docker can be found in the `docker` folder.
+8. Run the following commands to install dependencies, run tests, migrations and seeders
+
+## Install dependencies
+
+```bash
+composer install
+```
+
+## Run tests
+
+```bash
+php artisan test
+```
+
+## Run migrations
+
+```bash
+php artisan migrate
+```
+
+## Run seeders
+
+```bash
+php artisan db:seed
+```
+
+## Test Console Command
+
+1. Run `php artisan queue:work` to run the default queue
+2. Run `php artisan download:articles` to fetch the articles from the API and store in the database

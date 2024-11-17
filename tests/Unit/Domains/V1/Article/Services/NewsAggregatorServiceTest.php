@@ -5,9 +5,6 @@ namespace Tests\Unit\Domains\V1\Article\Services;
 use App\Domain\V1\Article\Repositories\ArticleRepository;
 use App\Domain\V1\Article\Repositories\NewsSourceRepository;
 use App\Domain\V1\Article\Services\NewsAggregatorService;
-use App\Domain\V1\Article\Services\NewsApiService;
-use App\Domain\V1\Article\Services\NewYorkTimesApiService;
-use App\Domain\V1\Article\Services\TheGuardianApiService;
 use Tests\TestCase;
 
 class NewsAggregatorServiceTest extends TestCase
@@ -30,9 +27,6 @@ class NewsAggregatorServiceTest extends TestCase
         $this->newsAggregatorService = new NewsAggregatorService(
             $this->newsSourceRepository = $this->createMock(NewsSourceRepository::class),
             $this->articleRepository = $this->createMock(ArticleRepository::class),
-            $this->newsApiService = $this->createMock(NewsApiService::class),
-            $this->theGuardianApiService = $this->createMock(TheGuardianApiService::class),
-            $this->newYorkTimesApiService = $this->createMock(NewYorkTimesApiService::class)
         );
     }
 
@@ -42,10 +36,10 @@ class NewsAggregatorServiceTest extends TestCase
         $this->newsSourceRepository->expects($this->once())
             ->method('all')
             ->willReturn(collect([
-                (object)['name' => 'newsapi', 'api_key' => 'key1', 'base_url' => 'url1'],
-                (object)['name' => 'the guardian', 'api_key' => 'key2', 'base_url' => 'url2'],
-                (object)['name' => 'new york times', 'api_key' => 'key3', 'base_url' => 'url3'],
-        ]));
+                (object) ['name' => 'newsapi', 'api_key' => 'key1', 'base_url' => 'url1'],
+                (object) ['name' => 'the guardian', 'api_key' => 'key2', 'base_url' => 'url2'],
+                (object) ['name' => 'new york times', 'api_key' => 'key3', 'base_url' => 'url3'],
+            ]));
         $this->newsSourceRepository->expects($this->once())
             ->method('newsCategories')
             ->willReturn(['category1', 'category2']);
@@ -70,5 +64,4 @@ class NewsAggregatorServiceTest extends TestCase
         $result = $this->newsAggregatorService->findAndStoreArticles();
         $this->assertTrue($result);
     }
-
 }

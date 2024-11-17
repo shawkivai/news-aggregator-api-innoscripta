@@ -10,5 +10,5 @@ interface NewsSourceInterface
 
     public function setQueryParams(array|string $queryParams): self;
 
-    public function getArticles(int $newsSourceId): array;
+    public function getArticles(int $newsSourceId, int $categoryId);
 }

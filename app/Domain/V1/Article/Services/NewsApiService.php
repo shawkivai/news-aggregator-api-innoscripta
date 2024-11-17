@@ -4,7 +4,7 @@ namespace App\Domain\V1\Article\Services;
 
 use App\Contacts\V1\NewsSourceInterface;
 use App\Domain\V1\Article\Transformer\NewsApiTransformer;
-use Illuminate\Support\Facades\Http;
+use App\Jobs\NewsApiJob;
 
 class NewsApiService implements NewsSourceInterface
 {
@@ -28,43 +28,19 @@ class NewsApiService implements NewsSourceInterface
         return $this;
     }
 
-    public function setQueryParams(array|string $keywords): self
+    public function setQueryParams(array|string $category): self
     {
-        // Separate keywords with comma and add to query parameters
-        $searchTerms = implode(' OR ', $keywords);
-        // dd($searchTerms);
-        $queryParameters = 'q='.$searchTerms.'&from='.now()->subDays(1)->format('Y-m-d').'&sortBy=publishedAt'.'&apiKey='.$this->apiKey;
+        $queryParameters = 'q='.$category.'&from='.now()->subDays(1)->format('Y-m-d').'&pageSize=100'.'&sortBy=publishedAt'.'&apiKey='.$this->apiKey;
 
         $this->queryParams = $queryParameters;
 
         return $this;
     }
 
-    public function getArticles(int $newsSourceId): array
+    public function getArticles(int $newsSourceId, int $categoryId): void
     {
         $url = $this->baseUrl.'?'.$this->queryParams;
 
-        $response = Http::get($url);
-
-        $articles = $response->json();
-        if ($response->successful() && ! empty($articles['articles'])) {
-            $randomArticles = array_rand($articles['articles'], min(count($articles['articles']), 100));
-            $articles = array_intersect_key($articles['articles'], array_flip($randomArticles));
-
-            return $this->processArticles($articles, $newsSourceId);
-        }
-
-        return [];
-    }
-
-    private function processArticles(array $articles, int $newsSourceId): array
-    {
-        foreach ($articles as $article) {
-            if (isset($article['source']['name']) && $article['source']['name'] != '[Removed]') {
-                $articlesDTO[] = NewsApiTransformer::transform($article, $newsSourceId);
-            }
-        }
-
-        return $articlesDTO;
+        NewsApiJob::dispatch($url, $newsSourceId, $categoryId);
     }
 }

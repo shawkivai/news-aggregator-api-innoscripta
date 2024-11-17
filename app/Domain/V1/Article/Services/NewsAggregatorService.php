@@ -4,6 +4,7 @@ namespace App\Domain\V1\Article\Services;
 
 use App\Domain\V1\Article\Repositories\ArticleRepository;
 use App\Domain\V1\Article\Repositories\NewsSourceRepository;
+use App\Enums\V1\NewsSourceEnum;
 
 class NewsAggregatorService
 {
@@ -14,45 +15,35 @@ class NewsAggregatorService
 
     public function findAndStoreArticles(): bool
     {
-        $articles = [];
+        try {
+            $newsSources = $this->newsSourceRepository->all();
 
-        $newsSources = $this->newsSourceRepository->all();
+            $categories = $this->newsSourceRepository->newsCategories();
 
-        $categories = $this->newsSourceRepository->newsCategories();
+            foreach ($newsSources as $newsSource) {
 
-        foreach ($newsSources as $newsSource) {
+                $serviceMap = [
+                    NewsSourceEnum::NEWSAPI->value => NewsApiService::class,
+                    NewsSourceEnum::THE_GUARDIAN->value => TheGuardianApiService::class,
+                    NewsSourceEnum::NEW_YORK_TIMES->value => NewYorkTimesApiService::class,
+                ];
 
-            switch (strtolower($newsSource->name)) {
-                case 'newsapi':
-                    $newsApiService = new NewsApiService;
-                    $newsApiArticles = $newsApiService->setApiKey($newsSource->api_key)
-                        ->setBaseUrl($newsSource->base_url)
-                        ->setQueryParams($categories)
-                        ->getArticles($newsSource->id);
-
-                    break;
-                case 'the guardian':
-                    $theGuardianApiService = new TheGuardianApiService;
-                    $theGuardianArticles = $theGuardianApiService->setApiKey($newsSource->api_key)
-                        ->setBaseUrl($newsSource->base_url)
-                        ->setQueryParams($categories)
-                        ->getArticles($newsSource->id);
-                    break;
-                case 'new york times':
-                    $newYorkTimesApiService = new NewYorkTimesApiService;
-                    $newYorkTimesArticles = [];
+                $serviceName = strtolower($newsSource->name);
+                if (isset($serviceMap[$serviceName])) {
+                    $service = new $serviceMap[$serviceName];
                     foreach ($categories as $category) {
-                        $newYorkTimesArticles = array_merge($newYorkTimesArticles, $newYorkTimesApiService->setApiKey($newsSource->api_key)
+                        $service->setApiKey($newsSource->api_key)
                             ->setBaseUrl($newsSource->base_url)
-                            ->setQueryParams($category)
-                            ->getArticles($newsSource->id));
+                            ->setQueryParams($category->name)
+                            ->getArticles($newsSource->id, $category->id);
                     }
-                    break;
+                }
             }
+
+            return true;
+
+        } catch (\Throwable $th) {
+            return false;
         }
-
-        $articles = array_merge($newsApiArticles, $theGuardianArticles, $newYorkTimesArticles);
-
-        return $this->articleRepository->bulkInsert($articles);
     }
 }

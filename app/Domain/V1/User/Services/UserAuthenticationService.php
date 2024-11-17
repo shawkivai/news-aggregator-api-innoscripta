@@ -8,7 +8,7 @@ use App\Enums\V1\HttpStatus;
 use App\Traits\ServiceResponseTrait;
 use Illuminate\Support\Facades\Auth;
 
-class UserLoginService
+class UserAuthenticationService
 {
     use ServiceResponseTrait;
 

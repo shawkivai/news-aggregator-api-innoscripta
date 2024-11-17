@@ -15,7 +15,7 @@ class NewsApiServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->newsApiService = new NewsApiService();
+        $this->newsApiService = new NewsApiService;
     }
 
     // public function test_get_articles_returns_processed_articles(): void
@@ -50,7 +50,6 @@ class NewsApiServiceTest extends TestCase
     //         ->with($responseArticles['articles'][2], $newsSourceId)
     //         ->andReturn(['processed_article_3'])
     //         ->times(1);
-        
 
     //     $result = $this->newsApiService->getArticles($newsSourceId);
 
@@ -64,5 +63,5 @@ class NewsApiServiceTest extends TestCase
     //         $result
     //     );
     // }
-    
+
 }

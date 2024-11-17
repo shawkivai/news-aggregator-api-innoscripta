@@ -4,6 +4,7 @@ namespace App\Domain\V1\Article\Services;
 
 use App\Contacts\V1\NewsSourceInterface;
 use App\Domain\V1\Article\Transformer\NewYorkTimesTransformer;
+use App\Jobs\NewYorkTimesJob;
 use Illuminate\Support\Facades\Http;
 
 class NewYorkTimesApiService implements NewsSourceInterface
@@ -35,29 +36,10 @@ class NewYorkTimesApiService implements NewsSourceInterface
         return $this;
     }
 
-    public function getArticles(int $newsSourceId): array
+    public function getArticles(int $newsSourceId, int $categoryId): void
     {
         $url = $this->baseUrl.'?'.$this->queryParams;
 
-        $response = Http::get($url);
-
-        if ($response->successful()) {
-            $articles = $response->json();
-            if (! empty($articles['response']['docs'])) {
-                $randomArticles = array_rand($articles['response']['docs'], min(count($articles['response']['docs']), 100));
-                $articles = array_intersect_key($articles['response']['docs'], array_flip($randomArticles));
-
-                return $this->processArticles($articles, $newsSourceId);
-            }
-        }
-
-        return [];
-    }
-
-    private function processArticles(array $articles, int $newsSourceId): array
-    {
-        return array_map(function ($article) use ($newsSourceId) {
-            return NewYorkTimesTransformer::transform($article, $newsSourceId);
-        }, $articles);
+        NewYorkTimesJob::dispatch($url, $newsSourceId, $categoryId);
     }
 }

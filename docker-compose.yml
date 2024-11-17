@@ -26,6 +26,13 @@ services:
     networks:
       - news-aggregator-innoscripta-network
 
+  redis:
+    image: redis:latest
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - news-aggregator-innoscripta-network
+  
 networks:
   news-aggregator-innoscripta-network:
     driver: bridge
