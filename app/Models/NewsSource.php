@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class NewsSource extends Model
 {
@@ -14,4 +15,9 @@ class NewsSource extends Model
         'url',
         'status',
     ];
+
+    public function userPreferences(): MorphMany
+    {
+        return $this->morphMany(UserPreference::class, 'preference');
+    }
 }

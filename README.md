@@ -64,3 +64,5 @@ php artisan db:seed
 
 1. Run `php artisan queue:work` to run the default queue
 2. Run `php artisan download:articles` to fetch the articles from the API and store in the database
+
+3. Run `php artisan l5-swagger:generate` to generate the swagger documentation

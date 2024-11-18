@@ -6,6 +6,19 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/v1/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "operationId": "3671e53482667a29af32f02cd140a21d",
+                "responses": {
+                    "200": {
+                        "description": "Get all categories"
+                    }
+                }
+            }
+        },
         "/api/v1/register": {
             "post": {
                 "tags": [
@@ -304,6 +317,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Categories",
+            "description": "Categories"
+        },
         {
             "name": "User",
             "description": "User"

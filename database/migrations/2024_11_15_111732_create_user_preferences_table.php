@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_preferences', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('category_id')->constrained('categories');
+            $table->morphs('preference');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
