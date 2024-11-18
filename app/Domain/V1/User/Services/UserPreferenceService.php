@@ -3,19 +3,23 @@
 namespace App\Domain\V1\User\Services;
 
 use App\DataTransferObjects\ServiceResponseDTO;
+use App\Domain\V1\Article\Repositories\ArticleRepository;
+use App\Domain\V1\Article\Transformer\ArticleTransformer;
 use App\Domain\V1\User\Repositories\UserPreferenceRepository;
 use App\Domain\V1\User\Transformer\UserPreferenceTransformer;
 use App\Enums\V1\HttpStatus;
 use App\Models\Category;
 use App\Models\NewsSource;
 use App\Traits\ServiceResponseTrait;
+use Illuminate\Support\Facades\Config;
 
 class UserPreferenceService
 {
     use ServiceResponseTrait;
 
     public function __construct(
-        protected UserPreferenceRepository $userPreferenceRepository
+        protected UserPreferenceRepository $userPreferenceRepository,
+        protected ArticleRepository $articleRepository
     ) {}
 
     public function update(array $data): ServiceResponseDTO
@@ -65,6 +69,26 @@ class UserPreferenceService
                 UserPreferenceTransformer::transform($this->userPreferenceRepository->setUserId(auth()->id())->getUserPreferences()),
                 HttpStatus::SUCCESS,
                 'User preferences fetched successfully',
+            );
+        } catch (\Throwable $th) {
+            return $this->respondFailed(
+                $th->getMessage(),
+                HttpStatus::INTERNAL_ERROR
+            );
+        }
+    }
+
+    public function getNewsfeed(): ServiceResponseDTO
+    {
+        try {
+            return $this->respondSuccess(
+                ArticleTransformer::transform($this->articleRepository
+                    ->setLimit(Config::get('constants.pagination_limit.articles'))
+                    ->setOffset(request()->get('offset', 0))
+                    ->getArticlesByUserPreferences()
+                ),
+                HttpStatus::SUCCESS,
+                'Newsfeed fetched successfully',
             );
         } catch (\Throwable $th) {
             return $this->respondFailed(

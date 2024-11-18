@@ -19,6 +19,54 @@ class ArticleController extends Controller
 
     /**
      * @OA\Get(
+     *     path="/api/v1/articles/details/{articleId}",
+     *     tags={"Articles"},
+     *     summary="Get article details",
+     *     description="Fetches article details by ID",
+     *     security={{"BearerAuth": {}}},
+     *
+     *     @OA\Parameter(
+     *         name="articleId",
+     *         in="path",
+     *         description="Article ID to fetch details",
+     *         required=true,
+     *
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Article details fetched successfully",
+     *
+     *         @OA\JsonContent(
+     *             type="object",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Something went wrong")
+     *         )
+     *     )
+     * )
+     */
+    public function view(int $articleId)
+    {
+        try {
+            return $this->handleResponse($this->articleService->getArticleDetails($articleId));
+        } catch (\Throwable $th) {
+            return $this->apiFailedResponse(HttpStatus::INTERNAL_ERROR, $th->getMessage());
+        }
+    }
+
+    /**
+     * @OA\Get(
      *     path="/api/v1/articles/{categoryId}/{sourceId}",
      *     tags={"Articles"},
      *     summary="Get articles",

@@ -1,11 +1,65 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Users API",
-        "description": "API for user registration and login",
+        "title": "News Aggregator API",
+        "description": "API scrapes news from various sources and provides a unified interface for users to view and manage their preferences and newsfeed also filters news based on user preferences",
         "version": "1.0.0"
     },
     "paths": {
+        "/api/v1/articles/details/{articleId}": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Get article details",
+                "description": "Fetches article details by ID",
+                "operationId": "b3f7dafb0ec1fb596d1be6639cb2ab1d",
+                "parameters": [
+                    {
+                        "name": "articleId",
+                        "in": "path",
+                        "description": "Article ID to fetch details",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Article details fetched successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/articles/{categoryId}/{sourceId}": {
             "get": {
                 "tags": [
@@ -593,6 +647,49 @@
                                                 }
                                             },
                                             "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user/newsfeed": {
+            "get": {
+                "tags": [
+                    "User Preferences"
+                ],
+                "summary": "Get newsfeed",
+                "description": "Fetches newsfeed based on user preferences",
+                "operationId": "dd99a96754d3f541740e97ede1200d36",
+                "responses": {
+                    "200": {
+                        "description": "Newsfeed fetched successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "collection"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Something went wrong"
                                         }
                                     },
                                     "type": "object"

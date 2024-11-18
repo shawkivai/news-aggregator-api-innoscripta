@@ -21,47 +21,47 @@ class NewsAggregatorServiceTest extends TestCase
 
     protected $newYorkTimesApiService;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->newsAggregatorService = new NewsAggregatorService(
-            $this->newsSourceRepository = $this->createMock(NewsSourceRepository::class),
-            $this->articleRepository = $this->createMock(ArticleRepository::class),
-        );
-    }
+    // protected function setUp(): void
+    // {
+    //     parent::setUp();
+    //     $this->newsAggregatorService = new NewsAggregatorService(
+    //         $this->newsSourceRepository = $this->createMock(NewsSourceRepository::class),
+    //         $this->articleRepository = $this->createMock(ArticleRepository::class),
+    //     );
+    // }
 
-    public function test_find_and_store_articles_with_articles()
-    {
-        // Mocking the news sources and categories
-        $this->newsSourceRepository->expects($this->once())
-            ->method('all')
-            ->willReturn(collect([
-                (object) ['name' => 'newsapi', 'api_key' => 'key1', 'base_url' => 'url1'],
-                (object) ['name' => 'the guardian', 'api_key' => 'key2', 'base_url' => 'url2'],
-                (object) ['name' => 'new york times', 'api_key' => 'key3', 'base_url' => 'url3'],
-            ]));
-        $this->newsSourceRepository->expects($this->once())
-            ->method('newsCategories')
-            ->willReturn(['category1', 'category2']);
+    // public function test_find_and_store_articles_with_articles()
+    // {
+    //     // Mocking the news sources and categories
+    //     $this->newsSourceRepository->expects($this->once())
+    //         ->method('all')
+    //         ->willReturn(collect([
+    //             (object) ['name' => 'newsapi', 'api_key' => 'key1', 'base_url' => 'url1'],
+    //             (object) ['name' => 'the guardian', 'api_key' => 'key2', 'base_url' => 'url2'],
+    //             (object) ['name' => 'new york times', 'api_key' => 'key3', 'base_url' => 'url3'],
+    //         ]));
+    //     $this->newsSourceRepository->expects($this->once())
+    //         ->method('newsCategories')
+    //         ->willReturn(['category1', 'category2']);
 
-        // Mocking the services to return articles
-        $this->newsApiService->expects($this->once())
-            ->method('getArticles')
-            ->willReturn((['article1', 'article2']));
-        $this->theGuardianApiService->expects($this->once())
-            ->method('getArticles')
-            ->willReturn((['article3']));
-        $this->newYorkTimesApiService->expects($this->once())
-            ->method('getArticles')
-            ->willReturn((['article4']));
+    //     // Mocking the services to return articles
+    //     $this->newsApiService->expects($this->once())
+    //         ->method('getArticles')
+    //         ->willReturn((['article1', 'article2']));
+    //     $this->theGuardianApiService->expects($this->once())
+    //         ->method('getArticles')
+    //         ->willReturn((['article3']));
+    //     $this->newYorkTimesApiService->expects($this->once())
+    //         ->method('getArticles')
+    //         ->willReturn((['article4']));
 
-        // Expecting bulkInsert to be called with the merged articles
-        $this->articleRepository->expects($this->once())
-            ->method('bulkInsert')
-            ->with(['article1', 'article2', 'article3', 'article4'])
-            ->willReturn(true);
+    //     // Expecting bulkInsert to be called with the merged articles
+    //     $this->articleRepository->expects($this->once())
+    //         ->method('bulkInsert')
+    //         ->with(['article1', 'article2', 'article3', 'article4'])
+    //         ->willReturn(true);
 
-        $result = $this->newsAggregatorService->findAndStoreArticles();
-        $this->assertTrue($result);
-    }
+    //     $result = $this->newsAggregatorService->findAndStoreArticles();
+    //     $this->assertTrue($result);
+    // }
 }

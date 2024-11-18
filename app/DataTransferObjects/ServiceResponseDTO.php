@@ -6,17 +6,13 @@ class ServiceResponseDTO extends AbstractDTO
 {
     /**
      * Status could be either "success" or "failed"
-     *
-     * @var string
      */
-    public $status;
+    public string $status;
 
     /**
      * HTTP Status Code
-     *
-     * @var int
      */
-    public $httpStatusCode;
+    public int $httpStatusCode;
 
     /**
      * Response Payload
@@ -25,7 +21,7 @@ class ServiceResponseDTO extends AbstractDTO
      *
      * @var mixed|null
      */
-    public $response;
+    public mixed $response;
 
     /**
      * Response Message

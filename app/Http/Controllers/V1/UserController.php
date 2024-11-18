@@ -16,9 +16,9 @@ class UserController extends Controller
 {
     /**
      * @OA\Info(
-     *     title="Users API",
+     *     title="News Aggregator API",
      *     version="1.0.0",
-     *     description="API for user registration and login"
+     *     description="API scrapes news from various sources and provides a unified interface for users to view and manage their preferences and newsfeed also filters news based on user preferences"
      * )
      *
      * @OA\SecurityScheme(

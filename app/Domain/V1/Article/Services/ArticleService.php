@@ -36,6 +36,15 @@ class ArticleService
         }
     }
 
+    public function getArticleDetails(int $articleId): ServiceResponseDTO
+    {
+        return $this->respondSuccess(
+            ArticleTransformer::transform($this->articleRepository->getArticleById($articleId)),
+            HttpStatus::SUCCESS,
+            'Article details fetched successfully',
+        );
+    }
+
     public function searchArticles($query): ServiceResponseDTO
     {
         try {

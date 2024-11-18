@@ -116,4 +116,41 @@ class UserPreferenceController extends Controller
             return $this->apiFailedResponse(HttpStatus::INTERNAL_ERROR, $th->getMessage());
         }
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/user/newsfeed",
+     *     tags={"User Preferences"},
+     *     summary="Get newsfeed",
+     *     description="Fetches newsfeed based on user preferences",
+     *     security={{"BearerAuth": {}}},
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Newsfeed fetched successfully",
+     *
+     *         @OA\JsonContent(
+     *             type="collection",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="message", type="string", example="Something went wrong")
+     *         )
+     *     )
+     * )
+     */
+    public function getNewsfeed()
+    {
+        try {
+            return $this->handleResponse($this->userPreferenceService->getNewsfeed());
+        } catch (\Throwable $th) {
+            return $this->apiFailedResponse(HttpStatus::INTERNAL_ERROR, $th->getMessage());
+        }
+    }
 }

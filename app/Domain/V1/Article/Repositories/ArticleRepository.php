@@ -2,7 +2,11 @@
 
 namespace App\Domain\V1\Article\Repositories;
 
+use App\Enums\V1\StatusEnum;
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\NewsSource;
+use App\Models\UserPreference;
 use Illuminate\Database\Eloquent\Collection;
 
 class ArticleRepository
@@ -103,6 +107,31 @@ class ArticleRepository
             ->orderBy('published_at', 'desc')
             ->offset($this->offset)
             ->limit($this->limit)
+            ->get();
+    }
+
+    public function getArticleById(int $articleId): Article
+    {
+        return Article::with('category', 'source')->findOrFail($articleId);
+    }
+
+    public function getArticlesByUserPreferences(): Collection
+    {
+        $userPreferences = UserPreference::where(['user_id' => auth()->id(), 'status' => StatusEnum::ACTIVE->value])->get();
+        $categoryIds = $userPreferences->where('preference_type', Category::class)->pluck('preference_id')->toArray();
+        $newsSourceIds = $userPreferences->where('preference_type', NewsSource::class)->pluck('preference_id')->toArray();
+
+        return Article::query()
+            ->when($categoryIds, function ($query) use ($categoryIds) {
+                $query->whereIn('category_id', $categoryIds);
+            })
+            ->when($newsSourceIds, function ($query) use ($newsSourceIds) {
+                $query->whereIn('news_source_id', $newsSourceIds);
+            })
+            ->orderBy('published_at', 'desc')
+            ->offset($this->offset)
+            ->limit($this->limit)
+            ->inRandomOrder()
             ->get();
     }
 }
