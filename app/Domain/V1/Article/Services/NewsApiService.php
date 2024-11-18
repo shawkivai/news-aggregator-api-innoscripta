@@ -3,7 +3,6 @@
 namespace App\Domain\V1\Article\Services;
 
 use App\Contacts\V1\NewsSourceInterface;
-use App\Domain\V1\Article\Transformer\NewsApiTransformer;
 use App\Jobs\NewsApiJob;
 
 class NewsApiService implements NewsSourceInterface

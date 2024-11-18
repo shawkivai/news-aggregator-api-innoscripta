@@ -15,7 +15,15 @@ Route::middleware('api-log')->group(function () {
         Route::post('logout', [UserController::class, 'logout']);
         Route::patch('reset-password', [UserController::class, 'resetPassword']);
 
-        Route::post('/user/set-preference', [UserPreferenceController::class, '__invoke']);
+        Route::post('/user/preferences', [UserPreferenceController::class, '__invoke']);
+        Route::get('/user/preferences', [UserPreferenceController::class, 'index']);
+
+        Route::prefix('articles')->group(function () {
+            Route::get('/{categoryId?}/{sourceId?}', [ArticleController::class, 'index']);
+
+        });
+
+        Route::get('/search-articles', [ArticleController::class, 'search']);
     });
 
     Route::get('news-cron', [ArticleController::class, 'downloadNews']);

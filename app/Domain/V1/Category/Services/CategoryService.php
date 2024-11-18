@@ -9,6 +9,7 @@ use App\Traits\ServiceResponseTrait;
 class CategoryService
 {
     use ServiceResponseTrait;
+
     public function __construct(
         protected CategoryRepository $categoryRepository
     ) {}

@@ -2,9 +2,7 @@
 
 namespace App\Domain\V1\Article\Services;
 
-use App\Domain\V1\Article\Transformer\TheGuardianTransformer;
 use App\Jobs\TheGuardianJob;
-use Illuminate\Support\Facades\Http;
 
 class TheGuardianApiService
 {

@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 class CategoryController extends Controller
 {
     use ResponseTrait;
+
     public function __construct(
         protected CategoryService $categoryService
     ) {}
@@ -19,10 +20,10 @@ class CategoryController extends Controller
      * @OA\Get(
      *     path="/api/v1/categories",
      *     tags={"Categories"},
+     *
      *     @OA\Response(response=200, description="Get all categories")
      * )
-     * @return \Illuminate\Http\JsonResponse
-     */ 
+     */
     public function index(): JsonResponse
     {
         try {
