@@ -16,7 +16,7 @@ Route::middleware('api-log')->group(function () {
         Route::patch('reset-password', [UserController::class, 'resetPassword']);
 
         Route::prefix('user')->group(function () {
-            Route::post('/preferences', [UserPreferenceController::class, '__invoke']);
+            Route::post('/preferences', [UserPreferenceController::class, 'setUserPreferences']);
             Route::get('/preferences', [UserPreferenceController::class, 'index']);
             Route::get('/newsfeed', [UserPreferenceController::class, 'getNewsfeed']);
         });

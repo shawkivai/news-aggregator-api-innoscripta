@@ -23,6 +23,14 @@ class TheGuardianApiService
     }
 
     /**
+     * Get API key
+     */
+    public function getApiKey(): string
+    {
+        return $this->apiKey;
+    }
+
+    /**
      * Set base URL
      */
     public function setBaseUrl(string $baseUrl): self
@@ -30,6 +38,14 @@ class TheGuardianApiService
         $this->baseUrl = $baseUrl;
 
         return $this;
+    }
+
+    /**
+     * Get base URL
+     */
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
     }
 
     /**
@@ -42,6 +58,14 @@ class TheGuardianApiService
         $this->queryParams = $queryParameters;
 
         return $this;
+    }
+
+    /**
+     * Get query parameters
+     */
+    public function getQueryParams(): string
+    {
+        return $this->queryParams;
     }
 
     /**

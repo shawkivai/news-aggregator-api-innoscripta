@@ -54,7 +54,7 @@ class ArticleService
     public function getArticleDetails(int $articleId): ServiceResponseDTO
     {
         $article = Cache::remember('article_'.$articleId, 1440, function () use ($articleId) {
-            return $this->articleRepository->getArticleById($articleId);
+            return $this->articleRepository->setArticleId($articleId)->getArticleById();
         });
 
         return $this->respondSuccess(

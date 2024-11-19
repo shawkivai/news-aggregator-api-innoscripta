@@ -25,9 +25,13 @@ class ArticleRepository
 
     protected $newsSourceId;
 
-    public function bulkInsert(array $articles): bool
+    protected $articleId;
+
+    public function setArticleId($articleId): self
     {
-        return Article::insert($articles);
+        $this->articleId = $articleId;
+
+        return $this;
     }
 
     public function setCategoryId($categoryId): self
@@ -37,11 +41,21 @@ class ArticleRepository
         return $this;
     }
 
+    public function getCategoryId(): int
+    {
+        return $this->categoryId;
+    }
+
     public function setSourceId($sourceId): self
     {
         $this->sourceId = $sourceId;
 
         return $this;
+    }
+
+    public function getSourceId(): int
+    {
+        return $this->sourceId;
     }
 
     public function setLimit($limit = 20): self
@@ -65,11 +79,21 @@ class ArticleRepository
         return $this;
     }
 
+    public function getPublishedAt(): string
+    {
+        return $this->publishedAt;
+    }
+
     public function setSearchKeyword($keyword): self
     {
         $this->searchKeyword = $keyword;
 
         return $this;
+    }
+
+    public function bulkInsert(array $articles): bool
+    {
+        return Article::insert($articles);
     }
 
     public function getArticles(): Collection
@@ -110,9 +134,9 @@ class ArticleRepository
             ->get();
     }
 
-    public function getArticleById(int $articleId): Article
+    public function getArticleById(): Article
     {
-        return Article::with('category', 'source')->findOrFail($articleId);
+        return Article::with('category', 'source')->findOrFail($this->articleId);
     }
 
     public function getArticlesByUserPreferences(): Collection

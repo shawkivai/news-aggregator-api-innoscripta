@@ -85,7 +85,7 @@ class UserPreferenceController extends Controller
      *
      * @throws \Throwable
      */
-    public function __invoke(UserPreferenceRequest $request)
+    public function setUserPreferences(UserPreferenceRequest $request)
     {
         try {
             return $this->handleResponse($this->userPreferenceService->update($request->validated()));
