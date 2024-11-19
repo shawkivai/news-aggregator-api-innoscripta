@@ -13,6 +13,9 @@ class NewYorkTimesApiService implements NewsSourceInterface
 
     protected string $queryParams;
 
+    /**
+     * Set API key
+     */
     public function setApiKey(string $apiKey): self
     {
         $this->apiKey = $apiKey;
@@ -20,6 +23,9 @@ class NewYorkTimesApiService implements NewsSourceInterface
         return $this;
     }
 
+    /**
+     * Set base URL
+     */
     public function setBaseUrl(string $baseUrl): self
     {
         $this->baseUrl = $baseUrl;
@@ -27,6 +33,9 @@ class NewYorkTimesApiService implements NewsSourceInterface
         return $this;
     }
 
+    /**
+     * Set query parameters
+     */
     public function setQueryParams(array|string $searchTerms): self
     {
         $this->queryParams = 'q='.$searchTerms.'&sort=newest'.'&page=1'.'&api-key='.$this->apiKey;
@@ -34,6 +43,9 @@ class NewYorkTimesApiService implements NewsSourceInterface
         return $this;
     }
 
+    /**
+     * Get articles
+     */
     public function getArticles(int $newsSourceId, int $categoryId): void
     {
         $url = $this->baseUrl.'?'.$this->queryParams;

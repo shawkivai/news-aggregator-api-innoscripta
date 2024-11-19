@@ -26,10 +26,8 @@ Route::middleware('api-log')->group(function () {
             Route::get('/{categoryId?}/{sourceId?}', [ArticleController::class, 'index']);
 
         });
-
-        Route::get('/search-articles', [ArticleController::class, 'search']);
+        Route::middleware('throttle:search-articles')->group(function () {
+            Route::get('/search-articles', [ArticleController::class, 'search']);
+        });
     });
-
-    Route::get('news-cron', [ArticleController::class, 'downloadNews']);
-
 });

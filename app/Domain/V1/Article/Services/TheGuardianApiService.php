@@ -12,6 +12,9 @@ class TheGuardianApiService
 
     protected string $queryParams;
 
+    /**
+     * Set API key
+     */
     public function setApiKey(string $apiKey): self
     {
         $this->apiKey = $apiKey;
@@ -19,6 +22,9 @@ class TheGuardianApiService
         return $this;
     }
 
+    /**
+     * Set base URL
+     */
     public function setBaseUrl(string $baseUrl): self
     {
         $this->baseUrl = $baseUrl;
@@ -26,6 +32,9 @@ class TheGuardianApiService
         return $this;
     }
 
+    /**
+     * Set query parameters
+     */
     public function setQueryParams(string $keyword): self
     {
         $queryParameters = 'q='.$keyword.'&from-date='.now()->subDays(1)->format('Y-m-d').'&api-key='.$this->apiKey;
@@ -35,6 +44,9 @@ class TheGuardianApiService
         return $this;
     }
 
+    /**
+     * Get articles
+     */
     public function getArticles(int $newsSourceId, int $categoryId): void
     {
         $url = $this->baseUrl.'?'.$this->queryParams;

@@ -2,6 +2,7 @@
 
 namespace App\Domain\V1\User\Services;
 
+use App\DataTransferObjects\ServiceResponseDTO;
 use App\Domain\V1\User\Repositories\UserRepository;
 use App\Domain\V1\User\Transformer\AuthUserTransformer;
 use App\Enums\V1\HttpStatus;
@@ -16,7 +17,10 @@ class UserAuthenticationService
         private readonly UserRepository $userRepository
     ) {}
 
-    public function authenticate(array $data)
+    /**
+     * Authenticate user
+     */
+    public function authenticate(array $data): ServiceResponseDTO
     {
         $userInfo = Auth::attempt($data);
 
@@ -31,7 +35,10 @@ class UserAuthenticationService
         );
     }
 
-    public function logout()
+    /**
+     * Logout user
+     */
+    public function logout(): ServiceResponseDTO
     {
         $this->userRepository->logout();
 
@@ -42,7 +49,10 @@ class UserAuthenticationService
         );
     }
 
-    public function resetPassword(array $data)
+    /**
+     * Reset password
+     */
+    public function resetPassword(array $data): ServiceResponseDTO
     {
         try {
             if (! $this->userRepository->checkOldPassword($data['old_password'])) {

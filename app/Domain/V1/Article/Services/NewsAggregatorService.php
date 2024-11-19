@@ -13,6 +13,9 @@ class NewsAggregatorService
         protected ArticleRepository $articleRepository
     ) {}
 
+    /**
+     * Find and store articles
+     */
     public function findAndStoreArticles(): bool
     {
         try {

@@ -16,6 +16,9 @@ class UserRegistrationService
         private readonly UserRepository $userRepository
     ) {}
 
+    /**
+     * Register user
+     */
     public function execute(array $data): ServiceResponseDTO
     {
         try {

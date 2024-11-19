@@ -22,6 +22,9 @@ class UserPreferenceService
         protected ArticleRepository $articleRepository
     ) {}
 
+    /**
+     * Update user preferences
+     */
     public function update(array $data): ServiceResponseDTO
     {
         try {
@@ -62,6 +65,9 @@ class UserPreferenceService
         }
     }
 
+    /**
+     * Get user preferences
+     */
     public function getUserPreferences(): ServiceResponseDTO
     {
         try {
@@ -78,6 +84,9 @@ class UserPreferenceService
         }
     }
 
+    /**
+     * Get newsfeed
+     */
     public function getNewsfeed(): ServiceResponseDTO
     {
         try {

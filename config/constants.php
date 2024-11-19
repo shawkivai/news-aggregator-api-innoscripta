@@ -6,4 +6,5 @@ return [
         'sources' => 3,
         'categories' => 10,
     ],
+    'search_articles_limit' => 30,
 ];
