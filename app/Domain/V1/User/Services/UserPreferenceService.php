@@ -90,12 +90,17 @@ class UserPreferenceService
     public function getNewsfeed(): ServiceResponseDTO
     {
         try {
+            $articles = $this->articleRepository
+                ->setLimit(Config::get('constants.pagination_limit.articles'))
+                ->setOffset(request()->get('offset', 0))
+                ->getArticlesByUserPreferences();
+
+            $articles = $articles->map(function ($article) {
+                return ArticleTransformer::transform($article);
+            });
+
             return $this->respondSuccess(
-                ArticleTransformer::transform($this->articleRepository
-                    ->setLimit(Config::get('constants.pagination_limit.articles'))
-                    ->setOffset(request()->get('offset', 0))
-                    ->getArticlesByUserPreferences()
-                ),
+                $articles,
                 HttpStatus::SUCCESS,
                 'Newsfeed fetched successfully',
             );

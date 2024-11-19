@@ -135,20 +135,20 @@
                 ]
             }
         },
-        "/api/v1/articles/search": {
+        "/api/v1/search-articles": {
             "get": {
                 "tags": [
                     "Articles"
                 ],
                 "summary": "Search articles",
                 "description": "Searches articles based on the provided query",
-                "operationId": "d9b7a795501cc77a0eb9a7fbd1635e3d",
+                "operationId": "1a190f59a9fdeafad4d35b6ed3034927",
                 "parameters": [
                     {
                         "name": "keyword",
                         "in": "query",
                         "description": "Keyword to search articles",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "string"
                         }
@@ -544,7 +544,7 @@
                 ],
                 "summary": "Update user preferences",
                 "description": "This endpoint updates the user's preferences.",
-                "operationId": "23aa1b0cfd017c426b22be7dbb542357",
+                "operationId": "f1f6b2c4b6dc8d35e36ff14a13fd9b98",
                 "requestBody": {
                     "description": "User preference data",
                     "required": true,

@@ -144,7 +144,7 @@ class ArticleController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/articles/search",
+     *     path="/api/v1/search-articles",
      *     tags={"Articles"},
      *     summary="Search articles",
      *     description="Searches articles based on the provided query",
@@ -154,7 +154,7 @@ class ArticleController extends Controller
      *         name="keyword",
      *         in="query",
      *         description="Keyword to search articles",
-     *         required=true,
+     *         required=false,
      *
      *         @OA\Schema(
      *             type="string",
