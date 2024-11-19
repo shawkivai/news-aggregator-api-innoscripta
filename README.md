@@ -1,4 +1,4 @@
-# Project Title
+# News-Aggregator API
 
 ## Setup with Docker
 
@@ -103,3 +103,4 @@ You can access the swagger documentation at `http://<host>/api/documentation`.
 - Laravel Pint to indent the code
 - PHPStan to check the code quality
 - Dockerizing the application
+- 3rd Party News API Sources implemented - NewsAPI, The New York Times, The Guardian
