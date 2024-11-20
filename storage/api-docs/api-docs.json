@@ -163,7 +163,7 @@
                         }
                     },
                     {
-                        "name": "category",
+                        "name": "category_id",
                         "in": "query",
                         "description": "Category ID to search articles",
                         "required": false,
@@ -172,7 +172,7 @@
                         }
                     },
                     {
-                        "name": "source",
+                        "name": "source_id",
                         "in": "query",
                         "description": "Source ID to search articles",
                         "required": false,

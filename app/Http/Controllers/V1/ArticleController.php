@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1;
 use App\Domain\V1\Article\Services\ArticleService;
 use App\Enums\V1\HttpStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArticleSearchRequest;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -173,7 +174,7 @@ class ArticleController extends Controller
      *     ),
      *
      *     @OA\Parameter(
-     *         name="category",
+     *         name="category_id",
      *         in="query",
      *         description="Category ID to search articles",
      *         required=false,
@@ -184,7 +185,7 @@ class ArticleController extends Controller
      *     ),
      *
      *     @OA\Parameter(
-     *         name="source",
+     *         name="source_id",
      *         in="query",
      *         description="Source ID to search articles",
      *         required=false,
@@ -214,7 +215,7 @@ class ArticleController extends Controller
      *     )
      * )
      */
-    public function search(Request $request): JsonResponse
+    public function search(ArticleSearchRequest $request): JsonResponse
     {
         try {
             return $this->handleResponse($this->articleService->searchArticles($request->query()));

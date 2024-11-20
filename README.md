@@ -66,6 +66,11 @@ php artisan test
 ```bash
 ./vendor/bin/phpstan analyse
 ```
+### Generate Swagger Documentation
+
+```bash
+php artisan l5-swagger:generate
+```
 
 ## Test the console commands
 
