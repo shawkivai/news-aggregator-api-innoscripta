@@ -2,14 +2,14 @@
 
 namespace App\Domain\V1\Article\Transformer;
 
-use App\Domain\V1\Article\DTO\NewsAPIDTO;
+use App\Domain\V1\Article\DTO\NewsApiDTO;
 use Carbon\Carbon;
 
 class NewsApiTransformer
 {
     public static function transform(array $article, int $newsSourceId, int $categoryId): array
     {
-        return (new NewsAPIDTO([
+        return (new NewsApiDTO([
             'news_source_id' => $newsSourceId,
             'category_id' => $categoryId,
             'title' => substr($article['title'], 0, 255),
