@@ -93,7 +93,8 @@ I have configured the scheduled commands to run everyday at 1:00 AM to download 
 
 ## Swagger Documentation
 
-You can access the swagger documentation at `http://<host>/api/documentation`.
+I have deployed the project on AWS lightsail instance and the swagger documentation is available at [http://13.55.9.197:8090/api/documentation](http://13.55.9.197:8090/api/documentation).
+
 
 ## Implemented Features
 
