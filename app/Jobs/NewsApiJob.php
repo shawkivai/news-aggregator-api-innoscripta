@@ -20,7 +20,7 @@ class NewsApiJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): bool
+    public function handle(): void
     {
         $response = Http::get($this->url);
 
@@ -32,8 +32,6 @@ class NewsApiJob implements ShouldQueue
             $processedArticles = array_merge($processedArticles, $this->processArticles($articles['articles']));
             $articleRepository->bulkInsert($processedArticles);
         }
-
-        return false;
     }
 
     private function processArticles(array $articles): array

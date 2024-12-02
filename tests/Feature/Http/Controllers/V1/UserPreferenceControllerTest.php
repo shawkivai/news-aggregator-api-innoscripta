@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Http\Controllers\V1;
+namespace Tests\Feature\Http\Controllers\V1;
 
 use App\DataTransferObjects\ServiceResponseDTO;
 use App\Domain\V1\User\Services\UserPreferenceService as ServicesUserPreferenceService;

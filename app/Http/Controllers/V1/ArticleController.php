@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleSearchRequest;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {

@@ -26,7 +26,7 @@ class NewYorkTimesJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): bool
+    public function handle(): void
     {
         $response = Http::get($this->url);
 
@@ -35,12 +35,9 @@ class NewYorkTimesJob implements ShouldQueue
             if (! empty($articles['response']['docs'])) {
                 $processedArticles = $this->processArticles($articles['response']['docs'], $this->newsSourceId, $this->categoryId);
                 $articleRepository = new ArticleRepository;
-
-                return $articleRepository->bulkInsert($processedArticles);
+                $articleRepository->bulkInsert($processedArticles);
             }
         }
-
-        return false;
     }
 
     private function processArticles(array $articles, int $newsSourceId, int $categoryId): array

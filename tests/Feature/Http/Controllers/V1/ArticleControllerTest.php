@@ -1,11 +1,12 @@
 <?php
 
-namespace Tests\Unit\Http\Controllers\V1;
+namespace Tests\Feature\Http\Controllers\V1;
 
 use App\DataTransferObjects\ServiceResponseDTO;
 use App\Domain\V1\Article\Services\ArticleService;
 use App\Enums\V1\HttpStatus;
 use App\Http\Controllers\V1\ArticleController;
+use App\Http\Requests\ArticleSearchRequest;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 
@@ -51,7 +52,7 @@ class ArticleControllerTest extends TestCase
                 'headers' => [],
             ]));
 
-        $response = $this->articleController->search(new Request(['keyword' => 'tesla', 'date' => '2022-01-01', 'category' => 1, 'source' => 1]));
+        $response = $this->articleController->search(new ArticleSearchRequest(['keyword' => 'tesla', 'date' => '2022-01-01', 'category' => 1, 'source' => 1]));
         $this->assertEquals(HttpStatus::SUCCESS, $response->getStatusCode());
     }
 

@@ -26,7 +26,7 @@ class TheGuardianJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle()
+    public function handle(): void
     {
         $response = Http::get($this->url);
 
@@ -34,10 +34,8 @@ class TheGuardianJob implements ShouldQueue
             $articles = $response->json();
             if (isset($articles['response']['results'])) {
                 $processedArticles = $this->processArticles($articles['response']['results'], $this->newsSourceId, $this->categoryId);
-                // dd($processedArticles);
                 $articleRepository = new ArticleRepository;
-
-                return $articleRepository->bulkInsert($processedArticles);
+                $articleRepository->bulkInsert($processedArticles);
             }
         }
     }
