@@ -4,7 +4,7 @@ namespace App\Domain\V1\Article\DTO;
 
 use App\DataTransferObjects\AbstractDTO;
 
-class NewsApiDTO extends AbstractDTO
+class NewsAggregatorDTO extends AbstractDTO
 {
     public string $title;
 

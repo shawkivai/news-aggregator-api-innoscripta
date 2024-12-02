@@ -2,13 +2,14 @@
 
 namespace App\Domain\V1\Article\Transformer;
 
+use App\Domain\V1\Article\DTO\NewsAggregatorDTO;
 use Carbon\Carbon;
 
 class TheGuardianTransformer
 {
     public static function transform(array $article, int $newsSourceId, int $categoryId): array
     {
-        return [
+        return (new NewsAggregatorDTO([
             'news_source_id' => $newsSourceId,
             'category_id' => $categoryId,
             'title' => substr($article['webTitle'], 0, 255),
@@ -18,6 +19,6 @@ class TheGuardianTransformer
             'published_at' => Carbon::parse($article['webPublicationDate'])->format('Y-m-d H:i:s'),
             'author' => $article['sectionName'],
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        ];
+        ]))->process();
     }
 }
